@@ -10,13 +10,13 @@ Currenlty this feature is only available in *nix environments.
 
 To install mps2mat.py you will need to do the following:
 
-1)      Make sure you’ve Numpy and Scipy installed.
+1)      Make sure you've Numpy and Scipy installed.
 
 2)      Download PyGLPK 0.30.
 
 3)      Extract it wherever you prefer and enter into the selected folder.
 
-4)      Change line 137 of “src/lp.c”  from
+4)      Change line 137 of "src/lp.c"  from
 
 int failure = glp_read_mps(self->lp, GLP_MPS_FILE, NULL, mps_n);
 
@@ -24,7 +24,7 @@ to
 
 int failure = glp_read_mps(self->lp, GLP_MPS_FILE, NULL, freemps_n);
 
-5)      If you intent to use a 64 bits machine, change line 74 of “Makefile” from
+5)      If you intent to use a 64 bits machine, change line 74 of "Makefile" from
 
 cd glpk/glpk-$* ; ./configure --prefix=$(CURDIR)/locals/$* ; make -j 8 CFLAGS+=-m32 LDFLAGS=-m32 install
 
