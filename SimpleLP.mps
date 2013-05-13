@@ -1,25 +1,25 @@
 * Problem:
-* Class:      LP
-* Rows:       3
-* Columns:    5
-* Non-zeros:  7
+* Class:      MIP
+* Rows:       2
+* Columns:    2 (2 integer, 2 binary)
+* Non-zeros:  4
 * Format:     Fixed MPS
 *
 NAME
 ROWS
  N  R0000000
- E  R0000001
- E  R0000002
- E  R0000003
+ L  R0000001
+ L  R0000002
 COLUMNS
+    M0000001  'MARKER'                 'INTORG'
+    C0000001  R0000000            -1   R0000002             2
     C0000001  R0000001            -2
-    C0000002  R0000002             1
-    C0000003  R0000003             1
-    C0000004  R0000000            -1   R0000003             3
-    C0000004  R0000001             1
-    C0000005  R0000000            -1   R0000003             2
-    C0000005  R0000002             2
+    C0000002  R0000000            -1   R0000002            -2
+    C0000002  R0000001             5
+    M0000002  'MARKER'                 'INTEND'
 RHS
-    RHS1      R0000001             4   R0000002            12
-    RHS1      R0000003            18
+    RHS1      R0000001             5   R0000002             1
+BOUNDS
+ UP BND1      C0000001             1
+ UP BND1      C0000002             1
 ENDATA
