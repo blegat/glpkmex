@@ -1,14 +1,17 @@
-# GLPKMEX INSTALLATION INSTRUCTIONS
+# GLPKMEX
 
 GLPKMEX is a Matlab MEX Interface for the GLPK library developed by
 Andrew Makhorin. GLPKMEX is developed by Nicolo' Giorgetti, email
-giorgetti __ at __ ieee.org.
+giorgetti  at  ieee.org.
 GLPK is currently being mantained by Niels Klitgord, email
-niels __ at __ bu.edu.
+niels  at  bu.edu.
+
+This version is maintained by Benoît Legat, email
+benoit.legat  at  gmail.com.
 
 To install mps2mat.py script, please see INSTALL_mps2mat file.
 
-## Quick instruction
+## Quick installation instructions
 
 Open MATLAB (for GNU/Linux user, you will need roots privileges so open a terminal (`CTRL+ALT+T`) and enter `sudo matlab` or `sudo matlab -glnx86` if you have problems with architecture (see [this wiki](https://help.ubuntu.com/community/MATLAB))).
 Then click on _File/Set Path..._ and add the path to where you
@@ -21,7 +24,7 @@ To check everything, try the two commands below in MATLAB
     >> glpktest2
 which should output a file `SimpleLP.mps` without error.
 
-## Instruction for compiling from source
+## Instructions for compiling from source
 
 ### Standard installation procedure (suitable for most 32-bit linux/windows users)
 
