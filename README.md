@@ -34,41 +34,40 @@ which should output a file `SimpleLP.mps` without error.
 2. Start Matlab and run makeglpkmex.m. Specify correct path to both GLPK
    directory and eventually to the GLPK include and library directories.
 
-3. Test the interface on the examples included (glpktest1.m, glpktest2.m, glpksparse.m). Everything should works fine.
+3. Test the interface on the examples included (`glpktest1.m`, `glpktest2.m`, `glpksparse.m`). Everything should works fine.
 
 ### Linux 64bit machine
 Niels's Install Notes
 
-1. if you plan on compling glpk with gmp, recompile gmp with 'CFLAGS+=-fPIC'. Then recompile glpk-4.36 (or newer) with 'CFLAGS+=-fPIC'.
+1. if you plan on compling glpk with gmp, recompile gmp with `CFLAGS+=-fPIC`. Then recompile `glpk-4.36` (or newer) with `CFLAGS+=-fPIC`.
     This is do deal with a weird issue with ld in 64bit format
 
 2. Directly compile glpkmex with (default):
 
-    mex -I<path to>/include glpkcc.cpp <path to>/libglpk.a
+        mex -I<path to>/include glpkcc.cpp <path to>/libglpk.a
 
 (with gmp compiled into glpk and large arrays (64bit stuff...)):
 
-    mex -largeArrayDims -I<path to>/include glpkcc.cpp <path to>/libglpk.a <path to>/libgmp.a
+        mex -largeArrayDims -I<path to>/include glpkcc.cpp <path to>/libglpk.a <path to>/libgmp.a
 
 **note -largArrayDims is optional, but allows matlab to use large arrays with glpk on 64bit machines**
 
 this particular pipeline has worked for me on a number of different 64bit linux boxes:
 
 1. in the linux comandline cd to glpk dir (4.36 or above)
-2. run:
+2. run (**note: update the dir install dir if you want, but be sure to do the same below**):
 
-    make clean
-    ./configure
-    make CFLAGS+=-fPIC
-    make check
-    make  prefix=/usr/local install
-
-**note: update the dir install dir if you want, but be sure to do the same below**
+        make clean
+        ./configure
+        make CFLAGS+=-fPIC
+        make check
+        make  prefix=/usr/local install
 
 3. cd glpkmex dir
 4. run from the comand line:
 
-    mex -largeArrayDims -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a
+        mex -largeArrayDims -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a
+        
 5. start matlab, add glpkmex dir to path and run glpktest1 and glpktest2 in matlab environment.  if these work you should be good to go.
 
 ### Install GLPK on 64bit Linux with 32bit MATLAB
@@ -92,12 +91,14 @@ Only use `CXXFLAGS='$CXXFLAGS -m32'` if you have a 32 bits MATLAB.
 I don't understand why it needs this option since `mex` is run inside MATLAB so it should now that it is in 32 bits however it is needed for me.
 
 ### Installing on a PC
-1. if you used winglpk, you still need to compile the glpk.lib file.
-   to do this go to w32 or w64 folder in winglpk and run 'Build_GLPK_with_VC9.bat'.
-   see the readme.txt file in w32 or w64 for more details on how to do this.
-2. note windows uses .lib, not .a files so change libglpk.a to glpk.lib (simular for gmp if used)
+1. if you used winglpk, you still need to compile the `glpk.lib` file.
+   to do this go to w32 or w64 folder in winglpk and run `Build_GLPK_with_VC9.bat`.
+   see the `readme.txt` file in w32 or w64 for more details on how to do this.
+2. note windows uses `.lib`, not `.a` files so change `libglpk.a` to `glpk.lib` (simular for gmp if used)
 3. full paths to directions (like include) often need to be in quotes.
-   ex: mex -I'C:\\some path\include' glpkcc.cpp 'C:\\some other path\glpk.lib'
+   ex:
+
+        mex -I'C:\\some path\include' glpkcc.cpp 'C:\\some other path\glpk.lib'
 
 ### Installing with cygwin (alternate method on a pc):
 Requirements:
@@ -107,9 +108,10 @@ B) Gnumex: http://gnumex.sourceforge.net/
 
 1. Download GLPK and install it by specifying CFLAGS="-O3 -mno-cygwin" as
    argument of make, i.e.:
-    ./configure;
-    make CFLAGS="-O3 -mno-cygwin"
-    make install
+
+        ./configure;
+        make CFLAGS="-O3 -mno-cygwin"
+        make install
    This avoid to build a glpk library which needs of cygwin1.dll to run.
 
 2. Start Matlab and run gnumex. Make a mexopts.bat with option 'cygwin-mingw' if
@@ -131,7 +133,8 @@ However, if you want to compile by yourself for whatever reason.
 I'd like to mention that everything worked as expected for me except for mex for which
 I had to change the compiler from gcc-4.2 to gcc and I had to remove `-syslibroot /Developer/SDKs/MacOSX10.6.sdk`
 So here is the command I had to enter in MATLAB:
-mex -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a -v CC='gcc' CXX='g++' CFLAGS='-fno-common -no-cpp-precomp -arch x86_64 -mmacosx-version-min=10.5  -fexceptions' CXXFLAGS='-fno-common -no-cpp-precomp -fexceptions -arch x86_64 -mmacosx-version-min=10.5' LD='gcc' LDFLAGS='-Wl,-twolevel_namespace -undefined error -arch x86_64 -Wl -mmacosx-version-min=10.5 -bundle -Wl,-exported_symbols_list,/Applications/MATLAB_R2012a_Student.app/extern/lib/maci64/mexFunction.map'
+
+        mex -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a -v CC='gcc' CXX='g++' CFLAGS='-fno-common -no-cpp-precomp -arch x86_64 -mmacosx-version-min=10.5  -fexceptions' CXXFLAGS='-fno-common -no-cpp-precomp -fexceptions -arch x86_64 -mmacosx-version-min=10.5' LD='gcc' LDFLAGS='-Wl,-twolevel_namespace -undefined error -arch x86_64 -Wl -mmacosx-version-min=10.5 -bundle -Wl,-exported_symbols_list,/Applications/MATLAB_R2012a_Student.app/extern/lib/maci64/mexFunction.map'
 
 Another special notes for installing on a Mac,( worked for Leapard )
 add GLPK lib install directory to your DYLD_LIBRARY_PATH shell variable (before you start matlab)
