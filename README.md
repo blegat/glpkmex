@@ -134,7 +134,7 @@ I'd like to mention that everything worked as expected for me except for mex for
 I had to change the compiler from gcc-4.2 to gcc and I had to remove `-syslibroot /Developer/SDKs/MacOSX10.6.sdk`
 So here is the command I had to enter in MATLAB:
 
-        mex -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a -v CC='gcc' CXX='g++' CFLAGS='-fno-common -no-cpp-precomp -arch x86_64 -mmacosx-version-min=10.5  -fexceptions' CXXFLAGS='-fno-common -no-cpp-precomp -fexceptions -arch x86_64 -mmacosx-version-min=10.5' LD='gcc' LDFLAGS='-Wl,-twolevel_namespace -undefined error -arch x86_64 -Wl -mmacosx-version-min=10.5 -bundle -Wl,-exported_symbols_list,/Applications/MATLAB_R2012a_Student.app/extern/lib/maci64/mexFunction.map'
+        mex -largeArrayDims -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a -v CC='gcc' CXX='g++' CFLAGS='-fno-common -no-cpp-precomp -arch x86_64 -mmacosx-version-min=10.5  -fexceptions' CXXFLAGS='-fno-common -no-cpp-precomp -fexceptions -arch x86_64 -mmacosx-version-min=10.5' LD='gcc' LDFLAGS='-Wl,-twolevel_namespace -undefined error -arch x86_64 -Wl -mmacosx-version-min=10.5 -bundle -Wl,-exported_symbols_list,/Applications/MATLAB_R2012a_Student.app/extern/lib/maci64/mexFunction.map'
 
 Another special notes for installing on a Mac,( worked for Leapard )
 add GLPK lib install directory to your DYLD_LIBRARY_PATH shell variable (before you start matlab)
