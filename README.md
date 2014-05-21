@@ -11,12 +11,28 @@ benoit.legat  at  gmail.com.
 
 To install mps2mat.py script, please see INSTALL_mps2mat file.
 
+## Precompiled binaries
+
+You don't need to compile GLPKMEX by yourself nor install GLPK.
+They are both compiled into `glpkcc.mex*` files.
+
+* `a64` is for Linux 64 bits
+* `glx` is for Linux 32 bits
+* `maci64` is for Mac 64 bits
+* `w32` is for Windows 32 bits
+* `w64` is for Windows 64 bits
+
+The version of GLPK used is sadly pretty old (I think GLPK-4.40 for `a64` and `maci64`, I'm not sure for the others).
+GLPKMEX is not compatible with GLPK-4.49, I have not check yet which version works
+between GLPK-4.40 and GLPK-4.49, if you port GLPKMEX to GLPK-4.49, that will
+surely be helpful.
+
 ## Quick installation instructions
 
 Open MATLAB (for GNU/Linux user, you will need roots privileges so open a terminal (`CTRL+ALT+T`) and enter `sudo matlab` or `sudo matlab -glnx86` if you have problems with architecture (see [this wiki](https://help.ubuntu.com/community/MATLAB))).
 Then click on _File/Set Path..._ and add the path to where you
 put __glpkmex__. Then hit save.
-For GNU/Linux users, you can now quit MATLAB, dont run it with `sudo` again except for _Set Path..._.
+For GNU/Linux users, you can now quit MATLAB, don't run it with `sudo` again except for _Set Path..._.
 
 To check everything, try the two commands below in MATLAB
 
