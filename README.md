@@ -104,7 +104,7 @@ Open MATLAB and navigate to the folder of GLPKMEX and run
     mex CXXFLAGS='$CXXFLAGS -m32' -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a
 
 Only use `CXXFLAGS='$CXXFLAGS -m32'` if you have a 32 bits MATLAB.
-I don't understand why it needs this option since `mex` is run inside MATLAB so it should now that it is in 32 bits however it is needed for me.
+I don't understand why it needs this option since `mex` is run inside MATLAB so it should know that it is in 32 bits however it is needed for me.
 
 ### Installing on a PC
 1. if you used winglpk, you still need to compile the `glpk.lib` file.
