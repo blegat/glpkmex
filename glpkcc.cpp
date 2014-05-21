@@ -520,9 +520,9 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
     *time = (clock () - t_start) / CLOCKS_PER_SEC;
     
-   	glp_long tpeak;
+    size_t tpeak;
     glp_mem_usage(NULL, NULL, NULL, &tpeak);
-    *mem=(double)(4294967296.0 * tpeak.hi + tpeak.lo) / (1024);
+    *mem=((double) tpeak) / (1024);
        
     glp_delete_prob (lp);
 
