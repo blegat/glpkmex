@@ -88,7 +88,7 @@ this particular pipeline has worked for me on a number of different 64bit linux 
 
 ### Install GLPK on 64bit Linux with 32bit MATLAB
 First, you will need to install GLPK. The version 4.40 works fine with GLPKMEX-2.11 with the version 4.49 doesn't work with it. I have not checked the version between so just go with 4.40.
-Get the source [http://ftp.gnu.org/gnu/glpk/](here), unpack it with the ''Archive Manager'' and then open a terminal and go in the folder where you un packed it (for example, if it is in download, run `cd ~/Downloads/glpk-4.40`)
+Get the source [here](http://ftp.gnu.org/gnu/glpk/), unpack it with the ''Archive Manager'' and then open a terminal and go in the folder where you un packed it (for example, if it is in download, run `cd ~/Downloads/glpk-4.40`)
 Then run
 
     make clean
