@@ -11,8 +11,8 @@ under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2, or (at your option) any
 later version.
 
-This part of code is distributed with the FURTHER condition that it 
-can be compiled and linked with the Matlab libraries and it can be 
+This part of code is distributed with the FURTHER condition that it
+can be compiled and linked with the Matlab libraries and it can be
 used within the Matlab environment.
 
 GLPKMEX is distributed in the hope that it will be useful, but WITHOUT
@@ -36,7 +36,7 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern "C" {
   #include <glpk.h>
-} 
+}
 
 #define NIntP 21
 #define NRealP 11
@@ -134,11 +134,11 @@ static int glpk_print_hook (void *info, const char *msg)
   return 1;
 }
 
-// 
+//
 int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
       	 double *a, double *b, char *ctype, int *freeLB, double *lb,
       	 int *freeUB, double *ub, int *vartype, int isMIP, int lpsolver,
-      	 int save_pb, char *save_filename, char *filetype, 
+      	 int save_pb, char *save_filename, char *filetype,
          double *xmin, double *fmin, double *status,
       	 double *lambda, double *redcosts, double *time, double *mem)
 {
@@ -183,7 +183,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 		      glp_set_col_bnds (lp, i+1, GLP_FR, lb[i], ub[i]);
 	    }
 	  }
-  
+
   // -- Set the objective coefficient of the corresponding
   // -- structural variable. No constant term is assumed.
   glp_set_obj_coef(lp,i+1,c[i]);
@@ -216,7 +216,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
       // double-bounded variable
       case 'D': typx = GLP_DB; break;
 	}
-    
+
     if ( typx == GLP_DB && -b[i] < b[i]) {
         glp_set_row_bnds (lp, i+1, typx, -b[i], b[i]);
     }
@@ -224,7 +224,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
         glp_set_row_bnds (lp, i+1, GLP_FX, b[i], b[i]);
     }
     else {
-    // this should be glp_set_row_bnds (lp, i+1, typx, -b[i], b[i]);  
+    // this should be glp_set_row_bnds (lp, i+1, typx, -b[i], b[i]);
         glp_set_row_bnds (lp, i+1, typx, b[i], b[i]);
     }
 
@@ -243,7 +243,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
       if (!strcmp(filetype,"fixedmps")){
         if (glp_write_mps (lp, GLP_MPS_DECK, NULL, save_filename) != 0) {
             mexErrMsgTxt("glpk: unable to write the problem");
-	        longjmp (mark, -1);  
+	        longjmp (mark, -1);
         }
       }else{
         if (!strcmp(filetype,"freemps")){
@@ -255,10 +255,10 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
           if (lpx_print_prob (lp, save_filename) != 0) {
               mexErrMsgTxt("glpk: unable to write the problem");
 	          longjmp (mark, -1);
-          } 
-        } 
-      }    
-    } 
+          }
+        }
+      }
+    }
   }
   //-- scale the problem data (if required)
   if (! glpIntParam[16] || lpsolver != 1) {
@@ -285,7 +285,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
   glp_smcp sParam;
   glp_init_smcp(&sParam);
-  
+
   //-- set control parameters for simplex/exact method
   if (lpsolver == 1 || lpsolver == 3){
     //remap of control parameters for simplex method
@@ -296,7 +296,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
         case 0: sParam.meth=GLP_PRIMAL; break;
         case 1: sParam.meth=GLP_DUAL;   break;
         case 2: sParam.meth=GLP_DUALP;  break;
-        default: 
+        default:
             mexErrMsgTxt("glpk: unrecognized primal/dual method");
             longjmp (mark, -1);
     }
@@ -305,7 +305,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
     if (glpIntParam[3]==0) sParam.pricing=GLP_PT_STD;
     else sParam.pricing=GLP_PT_PSE;
 
-    // ratio test    
+    // ratio test
     if (glpIntParam[20]==0) sParam.r_test = GLP_RT_STD;
     else sParam.r_test=GLP_RT_HAR;
 
@@ -318,11 +318,11 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
     // iteration limit
     if (glpIntParam[5]==-1) sParam.it_lim=INT_MAX;
-    else sParam.it_lim=glpIntParam[5];   
+    else sParam.it_lim=glpIntParam[5];
 
     // time limit
     if (glpRealParam[6]==-1) sParam.tm_lim=INT_MAX;
-    else sParam.tm_lim=(int) glpRealParam[6];	
+    else sParam.tm_lim=(int) glpRealParam[6];
     sParam.out_frq=glpIntParam[7];	// output frequency
     sParam.out_dly=(int) glpRealParam[7];	// output delay
     // presolver
@@ -330,23 +330,23 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
     else sParam.presolve=GLP_OFF;
   }else{
 	for(int i = 0; i < NIntP; i++) {
-        // skip assinging ratio test or 
-        if ( i == 18 || i == 20) continue; 
+        // skip assinging ratio test or
+        if ( i == 18 || i == 20) continue;
 		lpx_set_int_parm (lp, IParam[i], glpIntParam[i]);
-    }		
+    }
 
 	for (int i = 0; i < NRealP; i++) {
 		lpx_set_real_parm (lp, RParam[i], glpRealParam[i]);
     }
   }
-  
+
   //set MIP params if MIP....
   glp_iocp iParam;
   glp_init_iocp(&iParam);
 
   if ( isMIP ){
     method = 'I';
-   
+
     switch (glpIntParam[0]) { //message level
          case 0:  iParam.msg_lev = GLP_MSG_OFF;   break;
          case 1:  iParam.msg_lev = GLP_MSG_ERR;   break;
@@ -385,21 +385,21 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
     // Choose Cutsets for mip
     // shut all cuts off, then start over....
-    iParam.gmi_cuts = GLP_OFF; 
-    iParam.mir_cuts = GLP_OFF; 
-    iParam.cov_cuts = GLP_OFF; 
+    iParam.gmi_cuts = GLP_OFF;
+    iParam.mir_cuts = GLP_OFF;
+    iParam.cov_cuts = GLP_OFF;
     iParam.clq_cuts = GLP_OFF;
 
     switch( glpIntParam[17] ) {
-        case 0: break; 
+        case 0: break;
         case 1: iParam.gmi_cuts = GLP_ON; break;
         case 2: iParam.mir_cuts = GLP_ON; break;
         case 3: iParam.cov_cuts = GLP_ON; break;
         case 4: iParam.clq_cuts = GLP_ON; break;
-        case 5: iParam.clq_cuts = GLP_ON; 
-                iParam.gmi_cuts = GLP_ON; 
-                iParam.mir_cuts = GLP_ON;  
-                iParam.cov_cuts = GLP_ON; 
+        case 5: iParam.clq_cuts = GLP_ON;
+                iParam.gmi_cuts = GLP_ON;
+                iParam.mir_cuts = GLP_ON;
+                iParam.cov_cuts = GLP_ON;
                 iParam.clq_cuts = GLP_ON; break;
         default: mexErrMsgTxt("glpk: cutset bad param");
     }
@@ -411,25 +411,25 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
         default:  mexErrMsgTxt("glpk: pprocess bad param");
     }
 
-    if (glpIntParam[16])  iParam.presolve=GLP_ON; 
-    else                  iParam.presolve=GLP_OFF; 
+    if (glpIntParam[16])  iParam.presolve=GLP_ON;
+    else                  iParam.presolve=GLP_OFF;
 
-    if (glpIntParam[19])  iParam.binarize = GLP_ON; 
+    if (glpIntParam[19])  iParam.binarize = GLP_ON;
     else                  iParam.binarize = GLP_OFF;
 
   }
   else {
-     /* Choose simplex method ('S') 
-     or interior point method ('T') 
-     or Exact method          ('E') 
+     /* Choose simplex method ('S')
+     or interior point method ('T')
+     or Exact method          ('E')
      to solve the problem  */
     switch (lpsolver) {
       case 1: method = 'S'; break;
       case 2: method = 'T'; break;
       case 3: method = 'E'; break;
-      default: 
+      default:
             mexErrMsgTxt("glpk:  lpsolver != lpsolver");
-            longjmp (mark, -1);	
+            longjmp (mark, -1);
     }
   }
 
@@ -491,7 +491,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
       /* Primal values */
       for (int i = 0; i < n; i++) {
- 
+
         if (lpsolver == 1 || lpsolver == 3)
               xmin[i] = glp_get_col_prim (lp, i+1);
         else
@@ -501,29 +501,29 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
       /* Dual values */
       for (int i = 0; i < m; i++) {
 
-        if (lpsolver == 1 || lpsolver == 3) 
+        if (lpsolver == 1 || lpsolver == 3)
             lambda[i] = glp_get_row_dual (lp, i+1);
-	    else 
+	    else
             lambda[i] = glp_ipt_row_dual (lp, i+1);
       }
 
       /* Reduced costs */
       for (int i = 0; i < glp_get_num_cols (lp); i++) {
 
-        if (lpsolver == 1 || lpsolver == 3) 
+        if (lpsolver == 1 || lpsolver == 3)
             redcosts[i] = glp_get_col_dual (lp, i+1);
-        else 
+        else
             redcosts[i] = glp_ipt_col_dual (lp, i+1);
       }
 
     }
 
     *time = (clock () - t_start) / CLOCKS_PER_SEC;
-    
+
     size_t tpeak;
     glp_mem_usage(NULL, NULL, NULL, &tpeak);
     *mem=((double) tpeak) / (1024);
-       
+
     glp_delete_prob (lp);
 
     return 0;
@@ -537,7 +537,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
   /* this shouldn't be nessiary with glp_deleted_prob, but try it
   if we have weird behavior again... */
   glp_free_env();
-  
+
 
   *status = errnum;
 
@@ -569,7 +569,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 	} \
   while (0)
 
-    
+
 //-- Input arguments
 #define	C_IN	     prhs[0]
 #define	A_IN	     prhs[1]
@@ -592,11 +592,11 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[])
 {
-  
+
   if(strcmp(glp_version(),"4.36")<0){
 	mexErrMsgTxt("This MEX interface is compatible only with GLPK version 4.36 or higher.");
 	}
-  
+
   if (nrhs != 9){
       mexPrintf("MEX interface to GLPK Version %s\n",glp_version());
       mexPrintf("Internal interface for the GNU GLPK library.\n");
@@ -611,20 +611,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
   double *c=mxGetPr(C_IN);
   if (c == NULL) mexErrMsgTxt("glpk: invalid value of C");
-  
-  
+
+
   //-- 2nd Input. A matrix containing the constraints coefficients.
   // If matrix A is NOT a sparse matrix
   double *A = mxGetPr(A_IN); // get the matrix
   if(A==NULL) mexErrMsgTxt("glpk: invalid value of A");
-  
+
   int mrowsA = mxGetM(A_IN);
-  
+
   int *rn;
   int *cn;
   double *a;
   int nz = 0;
-  
+
   if(!mxIsSparse(A_IN)){
      rn=(int *)mxCalloc(mrowsA*mrowsc+1,sizeof(int));
      cn=(int *)mxCalloc(mrowsA*mrowsc+1,sizeof(int));
@@ -672,16 +672,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
   //-- 3rd Input. A column array containing the right-hand side value
   //	           for each constraint in the constraint matrix.
   double *b = mxGetPr(B_IN);
-  
+
   if (b==NULL) mexErrMsgTxt("glpk: invalid value of b");
- 
+
 
   //-- 4th Input. An array of length mrowsc containing the lower
   //--            bound on each of the variables.
   double *lb = mxGetPr(LB_IN);
-  
+
   if (lb==NULL) mexErrMsgTxt("glpk: invalid value of lb");
-      
+
 
   //-- LB argument, default: Free
   int *freeLB=(int *)mxCalloc(mrowsc,sizeof(int));
@@ -696,7 +696,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
   double *ub = mxGetPr(UB_IN);
 
   if (ub==NULL) mexErrMsgTxt("glpk: invalid value of ub");
-      
+
   int *freeUB=(int *)mxCalloc(mrowsc,sizeof(int));
   for (int i = 0; i < mrowsc; i++)
   {
@@ -710,46 +710,46 @@ void mexFunction( int nlhs, mxArray *plhs[],
   //--            in the constraint matrix.
   int size = mxGetNumberOfElements(CTYPE_IN) + 1;
   if (size==0) mexErrMsgTxt("glpk: invalid value of ctype");
-  
+
   /* Allocate enough memory to hold the converted string. */
   char *ctype =(char *)mxCalloc(size, sizeof (char));
 
   /* Copy the string data from string_array_ptr and place it into buf. */
   if (mxGetString(CTYPE_IN, ctype, size) != 0)  mexErrMsgTxt("Could not convert string data.");
-	  
-  
+
+
   //-- 7th Input. A column array containing the types of the variables.
   size = mxGetNumberOfElements(VARTYPE_IN)+1;
-  
+
   char *vtype = (char *)mxCalloc(size, sizeof (char));
   int *vartype = (int *)mxCalloc(size, sizeof (int));
-  
+
   if (size==0) mexErrMsgTxt("glpk: invalid value of vartype");
-    
+
   // Copy the string data from string_array_ptr and place it into buf.
   if (mxGetString(VARTYPE_IN, vtype, size) != 0)
 	  mexErrMsgTxt("Could not convert string data.");
-  
+
   int isMIP = 0;
   for (int i = 0; i < mrowsc ; i++)
   {
     switch (vtype[i]){
       case 'I': vartype[i] = GLP_IV; isMIP = 1; break;
       case 'B': vartype[i] = GLP_BV; isMIP = 1; break;
-      default: vartype[i] = GLP_CV;   
+      default: vartype[i] = GLP_CV;
     }
   }
 
   //-- 8th Input. Sense of optimization.
   int sense;
-  
+
   double *tmp = mxGetPr(SENSE_IN);
-  
+
   if (*tmp >= 0) sense = 1;
   else sense = -1;
 
   //-- 9th Input. A structure containing the control parameters.
-  
+
   //-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //-- Integer parameters
   //-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -760,7 +760,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     {
       mexErrMsgTxt("glpk: param.msglev must be 0 (no output [default]) or 1 (error messages only) or 2 (normal output) or 3 (full output)");
     }
-  
+
   //-- scaling option
   GLPK_GET_INT_PARAM (PARAM, "scale", glpIntParam[1]);
   if (glpIntParam[1] < 0 || glpIntParam[1] > 4)
@@ -782,7 +782,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
       mexErrMsgTxt("glpk: param.price must be 0 (textbook pricing) or 1 (steepest edge pricing [default])");
     }
 
-  //-- Ratio test option 
+  //-- Ratio test option
   GLPK_GET_INT_PARAM (PARAM, "r_test", glpIntParam[20]);
   if (glpIntParam[20] < 0 || glpIntParam[20] > 1)
     {
@@ -825,7 +825,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     {
       mexErrMsgTxt("glpk: param.presol must be 0 (do NOT use LP presolver) or 1 (use LP presolver [default])");
     }
-  
+
   //-- Generating cuts
   GLPK_GET_INT_PARAM (PARAM, "usecuts", glpIntParam[17]);
   if (glpIntParam[17] < 0 || glpIntParam[17] > 5)
@@ -861,12 +861,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
   char *filetype = NULL;
   GLPK_GET_INT_PARAM (PARAM, "save", save_pb);
   save_pb = (save_pb != 0);
-  if (save_pb){   
+  if (save_pb){
     // -- Look for the name --
     mxArray *mxtmp=mxGetField(PARAM,0,"savefilename");
     if ( mxtmp != NULL ){
       int nl=mxGetNumberOfElements(mxtmp)+1;
-      nl=nl+4; // increase size to consider then extension .xxx 
+      nl=nl+4; // increase size to consider then extension .xxx
       save_filename=(char *)mxCalloc(nl,sizeof(char));
       if (mxGetString(mxtmp, save_filename, nl) != 0)
         mexErrMsgTxt("glpk: Could not load file name to save.");
@@ -875,12 +875,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
       save_filename= (char *)mxCalloc(9, sizeof(char));
       strcpy(save_filename,"outpb");
     }
-    
+
     // -- Look for the type --
     char save_filetype[5];
     mxArray *txtmp=mxGetField(PARAM,0,"savefiletype");
     if ( txtmp != NULL ){
-      int nl=mxGetNumberOfElements(txtmp)+1; 
+      int nl=mxGetNumberOfElements(txtmp)+1;
       filetype=(char *)mxCalloc(nl,sizeof(char));
       if (mxGetString(txtmp, filetype, nl) != 0)
         mexErrMsgTxt("glpk: Could not load file type.");
@@ -890,18 +890,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (!strcmp(filetype,"cplex")) strcpy(save_filetype,".lp");
         else {
           if (!strcmp(filetype,"plain")) strcpy(save_filetype,".txt");
-        } 
-      }  
+        }
+      }
     }else{
       filetype= (char *)mxCalloc(5, sizeof(char));
       strcpy(filetype,"cplex");
       strcpy(save_filetype,".lp"); // Default file type
-    }  
-    strcat(save_filename,save_filetype); // name.extension   
+    }
+    strcat(save_filename,save_filetype); // name.extension
   }
-  
+
   // MPS parameters
-  //-- mpsinfo 
+  //-- mpsinfo
   GLPK_GET_INT_PARAM (PARAM, "mpsinfo", glpIntParam[8]);
   //-- mpsobj
   GLPK_GET_INT_PARAM (PARAM, "mpsobj", glpIntParam[9]);
@@ -909,14 +909,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
   {
     mexErrMsgTxt("glpk: param.mpsobj must be 0 (never output objective function row) or 1 (always output objective function row ) or 2 [default](output objective function row if the problem has no free rows)");
   }
-  //-- mpsorig 
+  //-- mpsorig
   GLPK_GET_INT_PARAM (PARAM, "mpsorig", glpIntParam[10]);
-  //-- mpswide 
+  //-- mpswide
   GLPK_GET_INT_PARAM (PARAM, "mpswide", glpIntParam[11]);
-  //-- mpsfree 
+  //-- mpsfree
   GLPK_GET_INT_PARAM (PARAM, "mpsfree", glpIntParam[12]);
-  
-  
+
+
 
   //-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //-- Real parameters
@@ -948,35 +948,35 @@ void mexFunction( int nlhs, mxArray *plhs[],
   GLPK_GET_REAL_PARAM (PARAM, "tolint", 8);
 
   GLPK_GET_REAL_PARAM (PARAM, "tolobj", 9);
- 
+
   GLPK_GET_REAL_PARAM (PARAM, "mipgap", 10);
-  
+
   //-- Assign pointers to the output parameters
   const char **extranames=(const char **)mxCalloc(4,sizeof(*extranames));
   extranames[0]="lambda";
   extranames[1]="redcosts";
   extranames[2]="time";
   extranames[3]="memory";
-  
+
   XMIN_OUT   = mxCreateDoubleMatrix(mrowsc, 1, mxREAL);
   FMIN_OUT   = mxCreateDoubleMatrix(1, 1, mxREAL);
   STATUS_OUT = mxCreateDoubleMatrix(1, 1, mxREAL);
-  
+
   double *xmin   = mxGetPr(XMIN_OUT);
   double *fmin   = mxGetPr(FMIN_OUT);
   double *status = mxGetPr(STATUS_OUT);
-  
+
   EXTRA_OUT  = mxCreateStructMatrix(1, 1, 4, extranames);
   mxArray *mxlambda   = mxCreateDoubleMatrix(mrowsA, 1, mxREAL);
   mxArray *mxredcosts = mxCreateDoubleMatrix(mrowsc, 1, mxREAL);
   mxArray *mxtime     = mxCreateDoubleMatrix(1, 1, mxREAL);
   mxArray *mxmem      = mxCreateDoubleMatrix(1, 1, mxREAL);
-  
+
   double *lambda = mxGetPr(mxlambda);
   double *redcosts= mxGetPr(mxredcosts);
   double *time   = mxGetPr(mxtime);
   double *mem    = mxGetPr(mxmem);
-  
+
   int jmpret = setjmp (mark);
 
   if (jmpret == 0)
@@ -999,13 +999,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
   mxFree(cn);
   mxFree(a);
   mxFree(freeLB);
-  mxFree(freeUB);		
+  mxFree(freeUB);
   mxFree(ctype);
   mxFree(vartype);
   mxFree(vtype);
   mxFree(extranames);
   mxFree(save_filename);
   mxFree(filetype);
-  
+
   return;
 }
