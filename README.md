@@ -11,6 +11,10 @@ benoit.legat  at  gmail.com.
 
 To install mps2mat.py script, please see INSTALL_mps2mat file.
 
+**WARNING** GLPKMEX only supports glpk until version 4.48.
+If you want to use a newer version of GLPK with an interface similar to MATLAB,
+you can try [Julia](http://julialang.org/) with [this GLPK wrapper](https://github.com/JuliaOpt/GLPK.jl).
+
 ## Precompiled binaries
 
 You don't need to compile GLPKMEX by yourself nor install GLPK.
