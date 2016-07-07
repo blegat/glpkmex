@@ -35,7 +35,10 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mex.h"
 
 extern "C" {
+  #include "lpx.h"
   #include <glpk.h>
+    
+  #include "lpx.c"
 }
 
 #define NIntP 21
