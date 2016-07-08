@@ -35,7 +35,10 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mex.h"
 
 extern "C" {
+  #include "lpx.h"
   #include <glpk.h>
+    
+  #include "lpx.c"
 }
 
 #define NIntP 21
@@ -152,7 +155,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
   else glp_term_hook (NULL, NULL);
 
   //-- Create an empty LP/MILP object
-  glp_prob *lp = glp_create_prob ();
+  LPX *lp = lpx_create_prob ();
 
   //-- Set the sense of optimization
   if (sense == 1)
@@ -524,7 +527,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
     glp_mem_usage(NULL, NULL, NULL, &tpeak);
     *mem=((double) tpeak) / (1024);
 
-    glp_delete_prob (lp);
+	lpx_delete_prob(lp);
 
     return 0;
   }
@@ -532,7 +535,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
    // printf("errnum is %d\n", errnum);
   }
 
-  glp_delete_prob (lp);
+  lpx_delete_prob(lp);
 
   /* this shouldn't be nessiary with glp_deleted_prob, but try it
   if we have weird behavior again... */
