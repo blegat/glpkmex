@@ -12,11 +12,10 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
-# Mac crap
+# Mac rubbish
 .DS_Store
 
 *.asv
-*.mex*
 *.bak
 
 *~
