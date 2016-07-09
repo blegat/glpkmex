@@ -11,10 +11,6 @@ benoit.legat  at  gmail.com.
 
 To install mps2mat.py script, please see INSTALL_mps2mat file.
 
-**WARNING** GLPKMEX only supports glpk until version 4.48.
-If you want to use a newer version of GLPK with an interface similar to MATLAB,
-you can try [Julia](http://julialang.org/) with [this GLPK wrapper](https://github.com/JuliaOpt/GLPK.jl).
-
 ## Precompiled binaries
 
 You don't need to compile GLPKMEX by yourself nor install GLPK.
@@ -26,7 +22,7 @@ They are both compiled into `glpkcc.mex*` files.
 * `w32` is for Windows 32 bits (in the win32 subdir)
 * `w64` is for Windows 64 bits (in the win64 subdir)
 
-On Windows, GLPK v4.60 is used.
+On Windows, GLPK v4.60 is used but Linux and Mac versions uses GLPK v4.48 (see [this issue](https://github.com/blegat/glpkmex/issues/3)).
 
 ## Quick installation instructions
 
@@ -45,7 +41,7 @@ which should output a file `SimpleLP.mps` without error.
 
 ### Standard installation procedure (suitable for most 32-bit linux/windows users)
 
-1. Download and install GLPK version 4.40 or higher:
+1. Download and install GLPK version 4.60 or higher:
        http://ftp.gnu.org/gnu/glpk/
 
 2. Start Matlab and run makeglpkmex.m. Specify correct path to both GLPK
@@ -56,7 +52,7 @@ which should output a file `SimpleLP.mps` without error.
 ### Linux 64bit machine
 Niels's Install Notes
 
-1. if you plan on compling glpk with gmp, recompile gmp with `CFLAGS+=-fPIC`. Then recompile `glpk-4.36` (or newer) with `CFLAGS+=-fPIC`.
+1. if you plan on compling glpk with gmp, recompile gmp with `CFLAGS+=-fPIC`. Then recompile `glpk-4.60` (or newer) with `CFLAGS+=-fPIC`.
     This is do deal with a weird issue with ld in 64bit format
 
 2. Directly compile glpkmex with (default):
@@ -71,7 +67,7 @@ Niels's Install Notes
 
 this particular pipeline has worked for me on a number of different 64bit linux boxes:
 
-1. in the linux comandline cd to glpk dir (4.36 or above)
+1. in the linux comandline cd to glpk dir
 2. run (**note: update the dir install dir if you want, but be sure to do the same below**):
 
         make clean
@@ -84,12 +80,12 @@ this particular pipeline has worked for me on a number of different 64bit linux 
 4. run from the comand line:
 
         mex -largeArrayDims -I/usr/local/include glpkcc.cpp /usr/local/lib/libglpk.a
-        
+
 5. start matlab, add glpkmex dir to path and run glpktest1 and glpktest2 in matlab environment.  if these work you should be good to go.
 
 ### Install GLPK on 64bit Linux with 32bit MATLAB
-First, you will need to install GLPK. The version 4.40 works fine with GLPKMEX-2.11 with the version 4.49 doesn't work with it. I have not checked the version between so just go with 4.40.
-Get the source [here](http://ftp.gnu.org/gnu/glpk/), unpack it with the ''Archive Manager'' and then open a terminal and go in the folder where you un packed it (for example, if it is in download, run `cd ~/Downloads/glpk-4.40`)
+First, you will need to install GLPK.
+Get the source [here](http://ftp.gnu.org/gnu/glpk/), unpack it with the ''Archive Manager'' and then open a terminal and go in the folder where you un packed it (for example, if it is in download, run `cd ~/Downloads/glpk-4.60`)
 Then run
 
     make clean
@@ -144,7 +140,7 @@ B) Gnumex: http://gnumex.sourceforge.net/
 
 ### Installing on a MAC
 On mac, it works out of the box with the file `glpkmex.mexmaci64`.
-It was compiled with glpk-4.40.
+It was compiled with glpk-4.60.
 
 However, if you want to compile by yourself for whatever reason.
 I'd like to mention that everything worked as expected for me except for mex for which
