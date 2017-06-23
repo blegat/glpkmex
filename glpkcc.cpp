@@ -545,7 +545,7 @@ int glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
     *mem=((double) tpeak) / (1024);
 
 	lpx_delete_prob(lp);
-
+	glp_free_env();
     return 0;
   }
   else {
