@@ -18,11 +18,19 @@ They are both compiled into `glpkcc.mex*` files.
 
 * `a64` is for Linux 64 bits
 * `glx` is for Linux 32 bits
-* `maci64` is for Mac 64 bits
+* `maci64` is for Mac OS 64 bits
 * `w32` is for Windows 32 bits (in the win32 subdir)
 * `w64` is for Windows 64 bits (in the win64 subdir)
 
-On Windows, GLPK v4.60 is used but Linux and Mac versions uses GLPK v4.48 (see [this issue](https://github.com/blegat/glpkmex/issues/3)).
+On Linux 64 bits, GLPK v4.61 is used, on Windows, GLPK v4.60 is used but Linux and Mac OS versions use GLPK v4.48 (see [this issue](https://github.com/blegat/glpkmex/issues/3)).
+
+Extension | OS      | Architecture | GLPK version |
+--------- | ------- | ------------ | ------------ |
+`a64`     | Linux   | 64 bits      | v4.61        |
+`glx`     | Linux   | 32 bits      | v4.48        |
+`maci64`  | Mac OS  | 64 bits      | v4.48        |
+`w32`     | Windows | 32 bits      | v4.60        |
+`w64`     | Windows | 64 bits      | v4.60        |
 
 ## Quick installation instructions
 
